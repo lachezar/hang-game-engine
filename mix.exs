@@ -4,7 +4,7 @@ defmodule HangGameEngine.Mixfile do
   def project do
     [ app: :hang_game_engine,
       version: "0.0.1",
-      elixir: "~> 0.11.3-dev",
+      elixir: "~> 0.11.2",
       deps: deps ]
   end
 
