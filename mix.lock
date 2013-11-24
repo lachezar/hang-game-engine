@@ -1,0 +1,3 @@
+[ "dispcount": {:git, "https://github.com/ferd/dispcount.git", "8421fa18d9b5902328c338c331c8a193b8ddb3d2", [{:ref, "1.0.0"}]},
+  "hackney": {:git, "git://github.com/benoitc/hackney.git", "0eeef2d26632e14c9fa1c7bcf644ce5e85de07a8", []},
+  "mimetypes": {:git, "https://github.com/spawngrid/mimetypes.git", "47d37a977a7d633199822bf6b08353007483d00f", [{:ref, "master"}]} ]
