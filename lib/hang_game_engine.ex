@@ -24,7 +24,7 @@ defmodule HangGameEngine do
 
   def generate_secret(options) do
     n = :crypto.rand_uniform(0, length options)
-    Enum.at(options, n)
+    Enum.at(options, n) |> bitstring_to_list
   end
 
   def ordered_uniqueue_list([h | t], r // [], s // HashSet.new) do
@@ -37,6 +37,24 @@ defmodule HangGameEngine do
 
   def ordered_uniqueue_list([], r, _s) do
     Enum.reverse(r)
+  end
+  
+  def search_giphy(search) do
+    url = "http://api.giphy.com/v1/gifs/translate?api_key=dc6zaTOxFJmzC&limit=1&s="
+    search_url = url <> String.replace(search, " ", "%20") # todo: better uri encode :/
+    result = :hackney.request(:get, search_url)
+    client = case result do
+      {:ok, 400, _, _} -> nil
+      {:ok, 200, _, client} -> client
+    end
+
+    if nil?(client) do
+      nil
+    else
+      {:ok, body, client} = :hackney.body(client)
+      {:ok, giphy_result} = JSON.decode(body)
+      giphy_result["data"]["images"]["fixed_height"]["url"]
+    end
   end
 end
 

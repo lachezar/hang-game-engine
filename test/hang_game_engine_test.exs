@@ -22,7 +22,7 @@ defmodule HangGameEngineTest do
   end
 
   test "generate secret" do
-    assert generate_secret(['a']) == 'a'
+    assert generate_secret(["a"]) == 'a'
   end
 
   test "count wrong tryouts" do
@@ -35,5 +35,11 @@ defmodule HangGameEngineTest do
     assert ordered_uniqueue_list('qwwqeretttyyy') == 'qwerty'
     assert ordered_uniqueue_list('') == ''
     assert ordered_uniqueue_list('aaaaa') == 'a'
+  end
+
+  test "giphy search" do
+    :hackney.start
+    assert is_bitstring search_giphy("star trek")
+    assert nil? search_giphy("random_text_here_with_0_results")
   end
 end
