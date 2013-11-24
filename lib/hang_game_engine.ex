@@ -27,7 +27,11 @@ defmodule HangGameEngine do
     Enum.at(options, n) |> bitstring_to_list
   end
 
-  def ordered_uniqueue_list([h | t], r // [], s // HashSet.new) do
+  def ordered_uniqueue_list(l) do
+    Enum.reverse(l) |> ordered_uniqueue_list([], HashSet.new)
+  end
+
+  def ordered_uniqueue_list([h | t], r, s) do
     if not Set.member?(s, h) do
       s = Set.put(s, h)
       r = [h | r]
@@ -36,7 +40,7 @@ defmodule HangGameEngine do
   end
 
   def ordered_uniqueue_list([], r, _s) do
-    Enum.reverse(r)
+    r
   end
   
   def search_giphy(search) do
