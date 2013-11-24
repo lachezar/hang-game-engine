@@ -23,8 +23,7 @@ defmodule HangGameEngine do
   end
 
   def generate_secret(options) do
-    #options = ['happy tree friends', 'how i met your mother', 'lost']
-    n = :random.uniform(length options) - 1
+    n = :crypto.rand_uniform(0, length options)
     Enum.at(options, n)
   end
 end
