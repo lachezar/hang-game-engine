@@ -1,29 +1,42 @@
 defmodule HangGameEngine do
 
   def guessed?(secret, tries) do
-    spaceless_secret = :sets.del_element(32, :sets.from_list(secret))
-    :sets.is_subset(spaceless_secret, :sets.from_list(tries))
+    spaceless_secret = HashSet.new(secret) |> Set.delete(32)
+    Set.subset?(spaceless_secret, HashSet.new(tries))
   end
 
   def currently_guessed(secret, tries) do
-    tries_set = :sets.from_list(tries)
+    tries_set = HashSet.new(tries)
     lc s inlist secret do 
-      if :sets.is_element(s, tries_set) or s == 32 do
+      if HashSet.member?(tries_set, s) or s == 32 do
         s
       else 
         '_'
       end
-    end |> :binary.list_to_bin
+    end |> list_to_bitstring
   end
 
   def wrong_tryouts(secret, tries) do
-    spaceless_secret = :sets.del_element(32, :sets.from_list(secret))
-    tries_set = :sets.from_list(tries)
-    :sets.subtract(tries_set, spaceless_secret) |> :sets.size
+    spaceless_secret = HashSet.new(secret) |> Set.delete(32)
+    tries_set = HashSet.new(tries)
+    Set.difference(tries_set, spaceless_secret) |> Set.size
   end
 
   def generate_secret(options) do
     n = :crypto.rand_uniform(0, length options)
     Enum.at(options, n)
   end
+
+  def ordered_uniqueue_list([h | t], r // [], s // HashSet.new) do
+    if not Set.member?(s, h) do
+      s = Set.put(s, h)
+      r = [h | r]
+    end
+    ordered_uniqueue_list(t, r, s)
+  end
+
+  def ordered_uniqueue_list([], r, _s) do
+    Enum.reverse(r)
+  end
 end
+

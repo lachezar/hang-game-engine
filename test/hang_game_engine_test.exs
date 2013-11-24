@@ -30,4 +30,10 @@ defmodule HangGameEngineTest do
     assert wrong_tryouts('happy tree', 'qwzxl') == 5
     assert wrong_tryouts('happy tree', 'hap') == 0
   end
+
+  test "ordered unique list should perserve the order" do
+    assert ordered_uniqueue_list('qwwqeretttyyy') == 'qwerty'
+    assert ordered_uniqueue_list('') == ''
+    assert ordered_uniqueue_list('aaaaa') == 'a'
+  end
 end
