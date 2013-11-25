@@ -4,15 +4,15 @@ defmodule HangGameEngineTest do
   import HangGameEngine
 
   test "guessed entire secret" do
-    assert currently_guessed('happy tree friends', 'hapytrefinds') == "happy tree friends"
+    assert partial_guess('happy tree friends', 'hapytrefinds') == "happy tree friends"
   end
 
   test "partially guessed secret" do
-    assert currently_guessed('happy tree friends', 'haptre') == "happ_ tree _r_e___"
+    assert partial_guess('happy tree friends', 'haptre') == "happ_ tree _r_e___"
   end
 
   test "not guessed at all" do
-    assert currently_guessed('happy tree friends', '') == "_____ ____ _______"
+    assert partial_guess('happy tree friends', '') == "_____ ____ _______"
   end
 
   test "guessed?" do
@@ -22,13 +22,13 @@ defmodule HangGameEngineTest do
   end
 
   test "generate secret" do
-    assert generate_secret(["a"]) == 'a'
+    assert random_element(["a"]) == "a"
   end
 
   test "count wrong tryouts" do
-    assert wrong_tryouts('happy tree', 'jhapqwer') == 3
-    assert wrong_tryouts('happy tree', 'qwzxl') == 5
-    assert wrong_tryouts('happy tree', 'hap') == 0
+    assert incorrect_attempts('happy tree', 'jhapqwer') == 3
+    assert incorrect_attempts('happy tree', 'qwzxl') == 5
+    assert incorrect_attempts('happy tree', 'hap') == 0
   end
 
   test "ordered unique list should perserve the order" do

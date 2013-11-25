@@ -5,7 +5,7 @@ defmodule HangGameEngine do
     Set.subset?(spaceless_secret, HashSet.new(tries))
   end
 
-  def currently_guessed(secret, tries) do
+  def partial_guess(secret, tries) do
     tries_set = HashSet.new(tries)
     lc s inlist secret do 
       if HashSet.member?(tries_set, s) or s == 32 do
@@ -16,15 +16,15 @@ defmodule HangGameEngine do
     end |> list_to_bitstring
   end
 
-  def wrong_tryouts(secret, tries) do
+  def incorrect_attempts(secret, tries) do
     spaceless_secret = HashSet.new(secret) |> Set.delete(32)
     tries_set = HashSet.new(tries)
     Set.difference(tries_set, spaceless_secret) |> Set.size
   end
 
-  def generate_secret(options) do
+  def random_element(options) do
     n = :crypto.rand_uniform(0, length options)
-    Enum.at(options, n) |> bitstring_to_list
+    Enum.at(options, n)
   end
 
   def ordered_uniqueue_list(l) do
